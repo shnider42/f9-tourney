@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RL 1v1 Signups</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <style>body{padding-top:2rem}</style>
+</head>
+<body class="container">
+  <h1 class="mb-3">Rocket League 1v1 – Signups</h1>
+  <p class="text-muted">Cap: {{ caps[0] }} players + {{ caps[1] }} subs (auto‑waitlist afterwards)</p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{category}}">{{msg}}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% if signups_open %}
+  <form method="post" class="row g-3 mb-4">
+    <div class="col-md-6">
+      <label class="form-label">Display name (stream name)*</label>
+      <input class="form-control" name="display_name" maxlength="80" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Discord* (e.g., user#1234)</label>
+      <input class="form-control" name="discord" maxlength="80" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Epic ID</label>
+      <input class="form-control" name="epic_id" maxlength="120">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Rank (optional)</label>
+      <input class="form-control" name="rank" maxlength="40" placeholder="C2, GC1, etc.">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Region</label>
+      <input class="form-control" name="region" maxlength="40" placeholder="NA/EU/...">
+    </div>
+    <div class="col-12">
+      <label class="form-label">Notes (availability, time prefs, etc.)</label>
+      <textarea class="form-control" name="notes" maxlength="280" rows="2"></textarea>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary">Sign me up</button>
+    </div>
+  </form>
+  {% else %}
+  <div class="alert alert-secondary">Signups are currently closed.</div>
+  {% endif %}
+
+  <h2>Roster</h2>
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <h4>Players</h4>
+      <ol>
+        {% for r in roster.players %}
+          <li><strong>{{ r.display_name }}</strong> <small class="text-muted">({{ r.discord }})</small>
+            {% if r.rank %}<span class="badge bg-info-subtle text-dark ms-1">{{ r.rank }}</span>{% endif %}
+          </li>
+        {% else %}
+          <p class="text-muted">No players yet.</p>
+        {% endfor %}
+      </ol>
+    </div>
+    <div class="col-md-4">
+      <h4>Subs</h4>
+      <ol>
+        {% for r in roster.subs %}
+          <li><strong>{{ r.display_name }}</strong> <small class="text-muted">({{ r.discord }})</small></li>
+        {% else %}
+          <p class="text-muted">No subs yet.</p>
+        {% endfor %}
+      </ol>
+    </div>
+    <div class="col-md-4">
+      <h4>Waitlist</h4>
+      <ol>
+        {% for r in roster.waitlist %}
+          <li><strong>{{ r.display_name }}</strong> <small class="text-muted">({{ r.discord }})</small></li>
+        {% else %}
+          <p class="text-muted">No one on the waitlist.</p>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+
+  <hr>
+  <p class="text-muted">Need to manage entries? Use the admin dashboard link you were given.</p>
+</body>
+</html>

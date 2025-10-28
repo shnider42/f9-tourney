@@ -1,0 +1,104 @@
+
+/* =====================
+   F9 Rocket League Theme
+   ===================== */
+:root{
+  --bg:#0f1011;
+  --bg2:#151516;
+  --panel:#1c1d1f;
+  --panel2:#222427;
+  --text:#E9E6DA;
+  --muted:#bdb8a9;
+  --accent:#E15B3E;
+  --accent-2:#2CC3C3; /* subs */
+  --accent-3:#E1B53E; /* waitlist */
+  --glow: 0 0 24px rgba(225,91,62,0.25);
+}
+html,body{
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  color: var(--text);
+  font-family: Inter, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+a{ color: var(--accent); text-decoration: none; }
+a:hover{ opacity:.9; }
+
+/* Hero */
+.hero{
+  position:relative;
+  background: url("{{ url_for('static', filename='hero_bg.svg') }}") center/cover no-repeat;
+  border-radius: 16px;
+  overflow:hidden;
+  box-shadow: 0 20px 60px #00000066;
+}
+.hero-inner{ padding: 48px 20px; text-align:center; backdrop-filter: blur(1px); }
+.hero .logo{ height: 68px; filter: drop-shadow(0 6px 18px #00000088); }
+.hero h1{ margin-top: 14px; letter-spacing: 0.5px; font-weight: 800; font-size: clamp(28px, 3vw, 38px); }
+.hero p{ color: var(--muted); margin: 6px 0 0; }
+
+/* Panels / Cards */
+.panel{
+  background: linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
+  border: 1px solid #2b2d31;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px #00000040;
+}
+.section-title{
+  display:flex; align-items:center; gap:8px; margin: 6px 0 14px;
+  font-weight:700; letter-spacing:.4px;
+}
+.section-title img{ height:18px; opacity:.9; }
+
+/* Form */
+.form-control, .form-select{
+  background-color:#222427; border-color:#3a3d41; color:var(--text);
+}
+.form-control:focus, .form-select:focus{
+  box-shadow: 0 0 0 .2rem rgba(225,91,62,.25);
+  border-color: var(--accent);
+}
+.form-label{ color: var(--muted); font-weight:600; }
+
+/* Buttons */
+.btn-primary{
+  background: linear-gradient(180deg, #ff7355 0%, var(--accent) 100%);
+  border: 1px solid #ff7355;
+  color:#141516;
+  font-weight:800; letter-spacing:.4px;
+  text-transform: uppercase;
+  box-shadow: var(--glow);
+}
+.btn-primary:hover{ transform: translateY(-1px); }
+.btn-outline{
+  background: transparent; color: var(--text); border:1px solid #3a3d41;
+}
+.btn-outline:hover{ border-color: var(--accent); color: var(--accent); }
+
+/* Roster lists */
+.roster ol{ margin:0; padding-left: 1.25rem; }
+.roster li{
+  background: #1b1c1e;
+  border:1px solid #2b2d31;
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  display:flex; align-items:center; justify-content: space-between;
+}
+.tag{
+  display:inline-block; padding: 2px 8px; border-radius: 999px; font-size:12px; font-weight:700;
+}
+.tag.rank{ background:#2a2b2e; color:#cfd2d6; border:1px solid #3b3d41; }
+.tag.player{ background: var(--accent); color:#141516; }
+.tag.sub{ background: var(--accent-2); color:#081111; }
+.tag.wait{ background: var(--accent-3); color:#18140a; }
+
+/* Admin select */
+select.form-select.form-select-sm{
+  background-color:#1c1d1f; color:var(--text); border-color:#3a3d41;
+}
+
+/* Alerts */
+.alert{
+  background-color:#1c1d1f; color: var(--text); border-color: var(--accent);
+  border-radius:12px;
+}
