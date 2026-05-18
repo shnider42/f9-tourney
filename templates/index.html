@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>F9 1v1 Signups</title>
+  <title>F9 2v2 Signups</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
   <div class="p-layer p-vignette" data-depth="0.05"></div>
       <div class="hero-inner">
         <img class="logo" src="{{ url_for('static', filename='f9_logo.png') }}" alt="F9">
-        <h1>F9 Rocket League 1v1</h1>
+        <h1>F9 Rocket League 2v2 Tournament Signup</h1>
         <p>Sign up to play. First {{ caps[0] }} are Players, next {{ caps[1] }} are Subs. Everyone else joins the Waitlist.</p>
         <div class="chips">
           <div class="chip">Players cap: {{ caps[0] }}</div>
@@ -48,7 +48,7 @@
           {% if signups_open %}
           <form method="post" class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">Display name (stream name)*</label>
+              <label class="form-label">Display name*</label>
               <input class="form-control" name="display_name" maxlength="80" required>
             </div>
             <div class="col-md-6">
@@ -56,20 +56,24 @@
               <input class="form-control" name="discord" maxlength="80" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Epic ID</label>
-              <input class="form-control" name="epic_id" maxlength="120">
+              <label class="form-label">RL Tracker link</label>
+              <input class="form-control" name="epic_id" maxlength="120" placeholder="https://rocketleague.tracker.network/...">
             </div>
-            <div class="col-md-3">
-              <label class="form-label">Rank</label>
-              <input class="form-control" name="rank" maxlength="40" placeholder="C2, GC1, etc.">
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
               <label class="form-label">Region</label>
-              <input class="form-control" name="region" maxlength="40" placeholder="NA/EU/...">
+              <select class="form-select" name="region" required>
+                <option value="">Select region...</option>
+                <option value="North America">North America</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+                <option value="South America">South America</option>
+                <option value="Middle East & North Africa">Middle East & North Africa</option>
+                <option value="Asia-Pacific North">Asia-Pacific North</option>
+                <option value="Asia-Pacific South">Asia-Pacific South</option>
+                <option value="Sub-Saharan Africa">Sub-Saharan Africa</option>
+              </select>
             </div>
             <div class="col-12">
-              <label class="form-label">Notes</label>
-              <textarea class="form-control" name="notes" maxlength="280" rows="2" placeholder="Availability, time prefs, etc."></textarea>
               <div class="small-muted mt-1">We’ll auto-place you as Player, Sub, or Waitlist based on order.</div>
             </div>
             <div class="col-12">
@@ -98,7 +102,7 @@
                 </div>
               </div>
               <div class="tags">
-                {% if r.rank %}<span class="tag rank">{{ r.rank }}</span>{% endif %}
+                {% if r.epic_id %}<span class="tag rank">RL Tracker</span>{% endif %}
                 {% if r.region %}<span class="tag region">{{ r.region }}</span>{% endif %}
               </div>
             </li>
@@ -119,7 +123,7 @@
                 </div>
               </div>
               <div class="tags">
-                {% if r.rank %}<span class="tag rank">{{ r.rank }}</span>{% endif %}
+                {% if r.epic_id %}<span class="tag rank">RL Tracker</span>{% endif %}
                 {% if r.region %}<span class="tag region">{{ r.region }}</span>{% endif %}
               </div>
             </li>
@@ -140,7 +144,7 @@
                 </div>
               </div>
               <div class="tags">
-                {% if r.rank %}<span class="tag rank">{{ r.rank }}</span>{% endif %}
+                {% if r.epic_id %}<span class="tag rank">RL Tracker</span>{% endif %}
                 {% if r.region %}<span class="tag region">{{ r.region }}</span>{% endif %}
               </div>
             </li>
@@ -153,7 +157,7 @@
     </div>
 
     <div class="footer mt-3">
-      Built for F9 — Rocket League 1v1 Signups • <a href="{{ url_for('roster_json') }}">roster.json</a>
+      Built for F9 — Rocket League 2v2 Signups • <a href="{{ url_for('roster_json') }}">roster.json</a>
     </div>
   </div>
 
