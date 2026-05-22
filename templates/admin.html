@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin — F9 1v1</title>
+  <title>Admin — F9 2v2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -13,16 +13,15 @@
   <div class="container-xl">
 
     <div class="hero">
-  <!-- Parallax layers -->
-  <div class=\"p-layer p-stadium\" data-depth=\"0.15\"></div>
-  <div class=\"p-layer p-vignette\" data-depth=\"0.05\"></div>
+      <!-- Parallax layers -->
+      <div class="p-layer p-stadium" data-depth="0.15"></div>
+      <div class="p-layer p-vignette" data-depth="0.05"></div>
       <div class="hero-inner">
         <img class="logo" src="{{ url_for('static', filename='f9_logo.png') }}" alt="F9">
-        <h1>Admin — F9 1v1</h1>
-        <p>Manage roster, signups, export CSV.</p>
+        <h1>Admin — F9 2v2</h1>
+        <p>Manage signups and export CSV.</p>
         <div class="chips">
-          <div class="chip">Players: {{ players|length }}/{{cap_players}}</div>
-          <div class="chip">Subs: {{ subs|length }}/{{cap_subs}}</div>
+          <div class="chip">Registered: {{ entries|length }}</div>
           <div class="chip">{% if signups_open %}Signups: Open{% else %}Signups: Closed{% endif %}</div>
         </div>
       </div>
@@ -34,120 +33,37 @@
         <input type="hidden" name="action" value="toggle_signups">
         <button class="btn btn-primary btn-sm">Toggle Signups</button>
       </form>
-      <form method="post" class="d-inline ms-2">
-        <input type="hidden" name="code" value="{{code}}">
-        <input type="hidden" name="action" value="shuffle_fill">
-        <button class="btn btn-outline btn-sm">Shuffle Fill by Timestamp</button>
-      </form>
       <a class="btn btn-outline btn-sm ms-2" href="{{ url_for('export_csv') }}?code={{code}}">Export CSV</a>
       <a class="btn btn-outline btn-sm ms-2" href="{{ url_for('roster_json') }}">View JSON</a>
     </div>
 
-    <div class="grid mt-3">
-      <div class="panel">
-        <div class="panel-title"><span class="bar"></span> Players</div>
-        <ul class="roster-list">
-        {% for r in players %}
-          <li class="roster-item">
-            <div class="info">
-              <span class="dot player"></span>
-              <div>
-                <strong>{{ r.display_name }}</strong>
-                <div class="handle">({{ r.discord }})</div>
+    <div class="panel mt-3">
+      <div class="panel-title"><span class="bar"></span> Registered Players</div>
+      <ul class="roster-list">
+      {% for r in entries %}
+        <li class="roster-item">
+          <div class="info">
+            <span class="dot registered"></span>
+            <div>
+              <strong>{{ r.display_name }}</strong>
+              <div class="handle">({{ r.discord }})</div>
+              <div class="tags mt-1">
+                {% if r.epic_id %}<span class="tag rank">RL Tracker</span>{% endif %}
+                {% if r.region %}<span class="tag region">{{ r.region }}</span>{% endif %}
               </div>
             </div>
-            <div class="d-flex align-items-center gap-2">
-              <form method="post" class="d-inline">
-                <input type="hidden" name="code" value="{{code}}">
-                <input type="hidden" name="id" value="{{r.id}}">
-                <input type="hidden" name="action" value="status">
-                <select name="new_status" onchange="this.form.submit()" class="form-select form-select-sm">
-                  <option value="player" selected>player</option>
-                  <option value="sub">sub</option>
-                  <option value="waitlist">waitlist</option>
-                </select>
-              </form>
-              <form method="post" class="d-inline">
-                <input type="hidden" name="code" value="{{code}}">
-                <input type="hidden" name="id" value="{{r.id}}">
-                <input type="hidden" name="action" value="delete">
-                <button class="btn btn-outline btn-sm">Delete</button>
-              </form>
-            </div>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title"><span class="bar"></span> Subs</div>
-        <ul class="roster-list">
-        {% for r in subs %}
-          <li class="roster-item">
-            <div class="info">
-              <span class="dot sub"></span>
-              <div>
-                <strong>{{ r.display_name }}</strong>
-                <div class="handle">({{ r.discord }})</div>
-              </div>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <form method="post" class="d-inline">
-                <input type="hidden" name="code" value="{{code}}">
-                <input type="hidden" name="id" value="{{r.id}}">
-                <input type="hidden" name="action" value="status">
-                <select name="new_status" onchange="this.form.submit()" class="form-select form-select-sm">
-                  <option value="player">player</option>
-                  <option value="sub" selected>sub</option>
-                  <option value="waitlist">waitlist</option>
-                </select>
-              </form>
-              <form method="post" class="d-inline">
-                <input type="hidden" name="code" value="{{code}}">
-                <input type="hidden" name="id" value="{{r.id}}">
-                <input type="hidden" name="action" value="delete">
-                <button class="btn btn-outline btn-sm">Delete</button>
-              </form>
-            </div>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title"><span class="bar"></span> Waitlist</div>
-        <ul class="roster-list">
-        {% for r in waitlist %}
-          <li class="roster-item">
-            <div class="info">
-              <span class="dot wait"></span>
-              <div>
-                <strong>{{ r.display_name }}</strong>
-                <div class="handle">({{ r.discord }})</div>
-              </div>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <form method="post" class="d-inline">
-                <input type="hidden" name="code" value="{{code}}">
-                <input type="hidden" name="id" value="{{r.id}}">
-                <input type="hidden" name="action" value="status">
-                <select name="new_status" onchange="this.form.submit()" class="form-select form-select-sm">
-                  <option value="player">player</option>
-                  <option value="sub">sub</option>
-                  <option value="waitlist" selected>waitlist</option>
-                </select>
-              </form>
-              <form method="post" class="d-inline">
-                <input type="hidden" name="code" value="{{code}}">
-                <input type="hidden" name="id" value="{{r.id}}">
-                <input type="hidden" name="action" value="delete">
-                <button class="btn btn-outline btn-sm">Delete</button>
-              </form>
-            </div>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
+          </div>
+          <form method="post" class="d-inline">
+            <input type="hidden" name="code" value="{{code}}">
+            <input type="hidden" name="id" value="{{r.id}}">
+            <input type="hidden" name="action" value="delete">
+            <button class="btn btn-outline btn-sm">Delete</button>
+          </form>
+        </li>
+      {% else %}
+        <div class="small-muted">No players registered yet.</div>
+      {% endfor %}
+      </ul>
     </div>
 
     <div class="footer mt-2">Admin panel • F9 RL</div>

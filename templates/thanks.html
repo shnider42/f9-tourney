@@ -14,14 +14,8 @@
     <div class="hero">
       <div class="hero-inner">
         <img class="logo" src="{{ url_for('static', filename='f9_logo.png') }}" alt="F9">
-        <h1>You're in! 🎉</h1>
-        {% if status == "player" %}
-          <p>You grabbed a <strong>Player</strong> slot.</p>
-        {% elif status == "sub" %}
-          <p>You grabbed a <strong>Sub</strong> slot.</p>
-        {% else %}
-          <p>You're on the <strong>Waitlist</strong>. We'll ping you if a spot opens.</p>
-        {% endif %}
+        <h1>You're registered! 🎉</h1>
+        <p>You're on the signup list for the F9 2v2 tournament.</p>
         <a class="btn btn-primary mt-2" href="{{ url_for('index') }}">Back to roster</a>
       </div>
     </div>
