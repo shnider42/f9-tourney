@@ -59,8 +59,8 @@ def index():
         region = (request.form.get("region") or "").strip()
         notes = (request.form.get("notes") or "").strip()[:280]
 
-        if not display_name or not discord:
-            flash("Display name and Discord are required.", "danger")
+        if not display_name or not discord or not epic_id or not region:
+            flash("Display name, Discord, RL Tracker link, and Region are required.", "danger")
             return redirect(url_for("index"))
 
         existing = Signup.query.filter(func.lower(Signup.discord) == discord).first()
