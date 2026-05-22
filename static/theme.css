@@ -145,6 +145,16 @@ a:hover{ color: #ffc1b2; }
   box-shadow: 0 0 20px #ff735560;
 }
 .small-muted{ color: var(--muted-2); font-size:13px; }
+.field-help{
+  color: var(--muted-2);
+  font-size: 12px;
+  line-height: 1.35;
+  margin-top: 6px;
+}
+.field-help a{
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
 
 /* FORM */
 .form-control, .form-select, textarea{
@@ -154,7 +164,7 @@ a:hover{ color: #ffc1b2; }
 }
 .form-control::placeholder, textarea::placeholder{
   color:#c8c1b6;
-  opacity:1;
+  opacity:.55;
 }
 .form-control:focus, .form-select:focus, textarea:focus{
   color: var(--text);
