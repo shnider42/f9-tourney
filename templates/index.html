@@ -14,16 +14,15 @@
   <div class="container-xl">
 
     <div class="hero">
-  <!-- Parallax layers -->
-  <div class="p-layer p-stadium" data-depth="0.15"></div>
-  <div class="p-layer p-vignette" data-depth="0.05"></div>
+      <!-- Parallax layers -->
+      <div class="p-layer p-stadium" data-depth="0.15"></div>
+      <div class="p-layer p-vignette" data-depth="0.05"></div>
       <div class="hero-inner">
         <img class="logo" src="{{ url_for('static', filename='f9_logo.png') }}" alt="F9">
         <h1>F9 Rocket League 2v2 Tournament Signup</h1>
-        <p>Sign up to play. First {{ caps[0] }} are Players, next {{ caps[1] }} are Subs. Everyone else joins the Waitlist.</p>
+        <p>Sign up to play in the current 2v2 tournament.</p>
         <div class="chips">
-          <div class="chip">Players cap: {{ caps[0] }}</div>
-          <div class="chip">Subs cap: {{ caps[1] }}</div>
+          <div class="chip">Registered: {{ entries|length }}</div>
           {% if signups_open %}
             <div class="chip">Signups: Open</div>
           {% else %}
@@ -74,7 +73,7 @@
               </select>
             </div>
             <div class="col-12">
-              <div class="small-muted mt-1">We’ll auto-place you as Player, Sub, or Waitlist based on order.</div>
+              <div class="small-muted mt-1">You’ll be added to the tournament signup list.</div>
             </div>
             <div class="col-12">
               <button class="btn btn-primary px-4">Sign me up</button>
@@ -88,14 +87,13 @@
 
       <div>
         <div class="panel roster-col">
-          <div class="panel-title"><span class="bar"></span> Roster</div>
+          <div class="panel-title"><span class="bar"></span> Registered Players</div>
 
-          <h3>Players</h3>
           <ul class="roster-list">
-          {% for r in roster.players %}
+          {% for r in entries %}
             <li class="roster-item">
               <div class="info">
-                <span class="dot player"></span>
+                <span class="dot registered"></span>
                 <div>
                   <strong>{{ r.display_name }}</strong>
                   <div class="handle">({{ r.discord }})</div>
@@ -107,49 +105,7 @@
               </div>
             </li>
           {% else %}
-            <div class="small-muted">No players yet.</div>
-          {% endfor %}
-          </ul>
-
-          <h3 class="mt-3">Subs</h3>
-          <ul class="roster-list">
-          {% for r in roster.subs %}
-            <li class="roster-item">
-              <div class="info">
-                <span class="dot sub"></span>
-                <div>
-                  <strong>{{ r.display_name }}</strong>
-                  <div class="handle">({{ r.discord }})</div>
-                </div>
-              </div>
-              <div class="tags">
-                {% if r.epic_id %}<span class="tag rank">RL Tracker</span>{% endif %}
-                {% if r.region %}<span class="tag region">{{ r.region }}</span>{% endif %}
-              </div>
-            </li>
-          {% else %}
-            <div class="small-muted">No subs yet.</div>
-          {% endfor %}
-          </ul>
-
-          <h3 class="mt-3">Waitlist</h3>
-          <ul class="roster-list">
-          {% for r in roster.waitlist %}
-            <li class="roster-item">
-              <div class="info">
-                <span class="dot wait"></span>
-                <div>
-                  <strong>{{ r.display_name }}</strong>
-                  <div class="handle">({{ r.discord }})</div>
-                </div>
-              </div>
-              <div class="tags">
-                {% if r.epic_id %}<span class="tag rank">RL Tracker</span>{% endif %}
-                {% if r.region %}<span class="tag region">{{ r.region }}</span>{% endif %}
-              </div>
-            </li>
-          {% else %}
-            <div class="small-muted">No one on the waitlist.</div>
+            <div class="small-muted">No players registered yet.</div>
           {% endfor %}
           </ul>
         </div>
